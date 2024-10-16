@@ -4,6 +4,17 @@
     <meta charset="UTF-8">
     <title>GitHub PAT Tester</title>
     <style>
+
+        body {
+            font-family: "Helvetica", sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
         .PAT-field {
             display: flex;
             flex-direction: column;
@@ -71,8 +82,13 @@
                 return response.headers.get('X-OAuth-Scopes')
             })
             .then(scopes => {
+                scopes_array  = scopes.split(', ');
                 let status = document.getElementById('scopes');
-                status.innerHTML = `<code>${escapeHtml(document.getElementById('pat').value)}</code> has these scopes: ${scopes}`;
+                status.innerHTML = escapeHtml(`<code>${document.getElementById('pat').value}</code> has these scopes:<ul>`);
+                scopes_array.forEach(scope => {
+                    status.innerHTML += escapeHtml(`<li>${scope}</li>`);
+                });
+                status.innerHTML += escapeHtml(`</ul>`);
             });
     });
     function escapeHtml(string) {
