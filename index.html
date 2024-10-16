@@ -84,11 +84,19 @@
             .then(scopes => {
                 scopes_array  = scopes.split(', ');
                 let status = document.getElementById('scopes');
-                status.innerHTML = escapeHtml(`<code>${document.getElementById('pat').value}</code> has these scopes:<ul>`);
+                let codeBlock = document.createElement('code');
+                let spanBlock = document.createElement('span');
+                listBlock = document.createElement('ul');
+                codeBlock.innerHTML = escapeHtml(document.getElementById('pat').value);
+                spanBlock.innerHTML = "has the following scopes:";
                 scopes_array.forEach(scope => {
-                    status.innerHTML += escapeHtml(`<li>${scope}</li>`);
+                    let listItem = document.createElement('li');
+                    listItem.innerHTML = escapeHtml(scope);
+                    listBlock.appendChild(listItem);
                 });
-                status.innerHTML += escapeHtml(`</ul>`);
+                status.appendChild(codeBlock);
+                status.appendChild(spanBlock);
+                status.appendChild(listBlock);
             });
     });
     function escapeHtml(string) {
