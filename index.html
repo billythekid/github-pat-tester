@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GitHub PAT Tester</title>
+</head>
+<body>
+<div class="PAT-field text-field">
+    <label for="pat">GitHub personal access token</label>
+    <div class="note">
+        <p>Register a PAT here: <a href="https://github.com/settings/tokens">https://github.com/settings/tokens</a>
+        </p>
+    </div>
+    <input class="" id="pat" name="PAT" placeholder="PAT" type="text" value="">
+    <button id="test-scopes" class="button">Test scopes</button>
+    <div id="scopes"></div>
+</div>
+<script>
+    document.getElementById('test-scopes').addEventListener('click', () => {
+        fetch('https://api.github.com', {
+            headers: {
+                "Authorization": "token " + document.getElementById('pat').value
+            }
+        })
+            .then(response => {
+                response.headers.forEach((val, key) => console.log({key: key, val: val}));
+                return response.headers.get('X-OAuth-Scopes')
+            })
+            .then(scopes => {
+                let status = document.getElementById('scopes');
+                status.innerHTML = `<code>${escapeHtml(document.getElementById('pat').value)}</code> has these scopes: ${scopes}`;
+            });
+    });
+</script>
+</body>
+</html>
