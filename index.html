@@ -88,7 +88,7 @@
                 let spanBlock = document.createElement('span');
                 listBlock = document.createElement('ul');
                 codeBlock.innerHTML = escapeHtml(document.getElementById('pat').value);
-                spanBlock.innerHTML = "has the following scopes:";
+                spanBlock.innerHTML = " has the following scopes:";
                 scopes_array.forEach(scope => {
                     let listItem = document.createElement('li');
                     listItem.innerHTML = escapeHtml(scope);
